@@ -7,7 +7,7 @@ const feeling=document.getElementById('feelings');
 const obj={};
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = d.getMonth()+1+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 // Personal API Key for OpenWeatherMap
 const APIKey='ef93aaf0f66805f7178b14255b2b136d';
@@ -19,7 +19,7 @@ const APIKey='ef93aaf0f66805f7178b14255b2b136d';
 btn.addEventListener('click',function(){
     
     if((zipCode.value)&&(feeling.value)){
-       getweather()  
+       getweather(APIKey)  
        .then((data)=>{
         postData('/addData',{
            date:newDate,
@@ -47,10 +47,9 @@ btn.addEventListener('click',function(){
 
 /*Function  to Get weather data */
 
- async function getweather(){
+ async function getweather(APIKey){
     const zipCode=document.getElementById('zip').value;
-    const APIKey='ef93aaf0f66805f7178b14255b2b136d';
-    const url=`https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&appid=${APIKey}`;
+    const url=`https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&appid=${APIKey}&units=imperial`;
     const request=await fetch(url);
     try{
         const allData=await request.json();
